@@ -38,7 +38,7 @@ body {
 
 header {
   width: 100%;
-  background: #0f172a;
+  background: rgba(15, 23, 42, 0.9);
   padding: 15px 5%;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
   position: fixed; 
@@ -56,7 +56,7 @@ header {
   gap: 24px;
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap;
+  position: relative;
 }
 
 .logo {
@@ -72,28 +72,88 @@ header {
   text-shadow: 0 0 18px rgba(38, 226, 236, 0.4);
 }
 
+.nav-toggle {
+  display: none;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-toggle:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(38, 226, 236, 0.45);
+}
+
+.nav-toggle:focus-visible,
+.nav-links li a:focus-visible {
+  outline: 2px solid #7ee7ff;
+  outline-offset: 3px;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: #fff;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-toggle.is-open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.is-open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
 .nav-links {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.nav-links li {
+  list-style: none;
 }
 
 .nav-links li a {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
   text-decoration: none;
   color: #fff;
   font-weight: 500;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease, background 0.3s ease;
 }
 
 .nav-links li a::after {
   content: "";
   position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 100%;
+  left: 18px;
+  right: 18px;
+  bottom: 8px;
   height: 2px;
   background: linear-gradient(90deg, #26e2ec, var(--accent));
   transform: scaleX(0);
@@ -103,12 +163,17 @@ header {
 
 .nav-links li a.active,
 .nav-links li a:hover {
-  color: #d236f5;
+  color: #fff;
+  background: rgba(38, 226, 236, 0.16);
   transform: translateY(-2px);
 }
 
 .nav-links li a.active::after,
 .nav-links li a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-links li a:focus-visible::after {
   transform: scaleX(1);
 }
 
@@ -733,7 +798,7 @@ acronym {
 
 @media (max-width: 900px) {
   body {
-    padding-top: 110px;
+    padding-top: 92px;
   }
 
   section {
@@ -775,27 +840,72 @@ acronym {
 
 @media (max-width: 640px) {
   body {
-    padding-top: 132px;
+    padding-top: 88px;
   }
 
   header {
-    padding: 14px 6%;
+    padding: 12px 5%;
   }
 
   .navbar {
-    justify-content: center;
+    gap: 16px;
   }
 
   .logo {
     font-size: 26px;
   }
 
+  .nav-toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
   .nav-links {
-    gap: 12px 18px;
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 14px;
+    border-radius: 24px;
+    background: rgba(15, 23, 42, 0.96);
+    border: 1px solid rgba(126, 231, 255, 0.18);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.28);
+    transform: translateY(-12px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  }
+
+  .nav-links.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-links li {
+    width: 100%;
   }
 
   .nav-links li a {
-    font-size: 0.95rem;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 14px 16px;
+    font-size: 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .nav-links li a::after {
+    left: 16px;
+    right: auto;
+    width: 28px;
+    bottom: 10px;
   }
 
   .myphoto,
