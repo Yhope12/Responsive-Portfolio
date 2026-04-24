@@ -379,7 +379,6 @@ acronym {
 /* Work Section */
 #work {
   padding: 80px 20px;
-  text-align: center;
   background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
@@ -389,8 +388,34 @@ acronym {
 
 #work h2 {
   font-size: 2.5rem;
-  margin-bottom: 40px;
+  margin-bottom: 14px;
   color: #222;
+  text-align: left;
+}
+
+#work > .container > p {
+  max-width: 700px;
+  margin-bottom: 18px;
+  padding: 18px 22px;
+  border-left: 4px solid rgba(138, 61, 104, 0.55);
+  border-radius: 0 18px 18px 0;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  text-align: left;
+  color: #2f2a3a;
+  background: rgba(255, 255, 255, 0.38);
+  box-shadow: 0 12px 28px rgba(36, 50, 74, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+#work > .container > small {
+  display: block;
+  max-width: 760px;
+  margin-top: 22px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  text-align: left;
+  color: rgba(34, 34, 34, 0.82);
 }
 
 .projects {
@@ -434,7 +459,77 @@ acronym {
   background: #fff;
 }
 
+/* MAIN CONTAINER */
+.competitions {
+  display: flex;
+  flex-direction: column; /* ✅ STACK ROWS VERTICALLY */
+  gap: 60px;
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 20px;
+  background: linear-gradient(
+  180deg,
+  rgba(148, 187, 233, 0.2) 0%,
+  rgba(81, 90, 218, 0.3) 100%
+);
+}
+
+/* EACH ROW */
+.competition-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* ALTERNATING */
+.competition-row:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+/* IMAGE + TEXT */
+.image, .text {
+  flex: 1;
+}
+
+/* IMAGE */
+.image img {
+  width: 100%;
+  border-radius: 15px;
+  transition: 0.4s ease;
+}
+
+/* TEXT */
+.text {
+  padding: 25px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  transition: 0.4s ease;
+}
+.text h3{
+  margin-bottom: 10px;
+}
+/* HOVER */
+.competition-row:hover .image img {
+  transform: scale(1.05);
+}
+
+.competition-row:hover .text {
+  transform: translateY(-5px);
+  background: rgba(0,255,150,0.1);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .competition-row {
+    flex-direction: column !important;
+    text-align: center;
+  }
+}
+
 .project-card h3 {
+  padding:0 15px;
   margin: 16px 0 10px;
   font-size: 1.3rem;
   color: #333;
@@ -736,6 +831,11 @@ acronym {
     padding: 18px 18px 20px;
     border-radius: 18px;
     line-height: 1.75;
+  }
+
+  #work > .container > p {
+    padding: 16px 18px;
+    font-size: 1rem;
   }
 
   .project-card img,
