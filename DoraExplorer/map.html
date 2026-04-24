@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Map</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: url("village.jpg") no-repeat center center fixed;
+      background-size: cover;   
+      display: flex;
+      justify-content: center;   
+      align-items: center;       
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px 16px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.85); 
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      width: min(100%, 760px);
+    }
+
+    h2 {
+      color: #5e2ca5;
+      font-weight: 600;
+      margin: 0 0 20px;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    img {
+      border-radius: 10px;
+      display: block;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      width: 100%;
+      max-width: 576px;
+      height: auto;
+    }
+
+    p {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: #8b2e2e;
+      margin: 20px 0 0;
+      font-weight: 600;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    a p {
+      display: inline-block;
+      background: #2c3e50;
+      color: #fff;
+      padding: 10px 25px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    a p:hover {
+      background: #10afaf;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px 12px;
+      }
+
+      .container {
+        padding: 18px 14px;
+      }
+
+      a p {
+        width: 100%;
+        padding: 12px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Which path should we go?</h2>
+    <img
+      src="360_F_259499366_ytGqXw4RgHBUHBteftXKtpqTs6qiscIh.jpg"
+      usemap="#Place"
+      alt="Village map"
+      width="576"
+      height="378"
+    >
+    <map name="Place">
+      <area shape="rect" coords="54,173,120,217" href="result.html" alt="Store">
+      <area shape="poly" coords="48,73,75,43,104,71,100,73,100,98,53,98,53,74" href="result.html" alt="Home">
+      <area shape="rect" coords="386,112,472,156" href="Yay.html" alt="School">
+      <area shape="poly" coords="93,275,128,275,128,261,168,261,168,275,204,275,204,315,93,315" href="result.html" alt="Police-station">
+      <area shape="poly" coords="209,145,209,104,242,104,242,88,284,88,284,104,318,104,318,145" href="result.html" alt="Hospital">
+      <area shape="poly" coords="443,318,443,274,463,274,487,254,513,274,531,274,531,318" href="result.html" alt="Fire-station">
+    </map>
+    <a href="dora.html"><p>Back to Dora</p></a>
+  </div>
+
+  <script>
+    function makeImageMapResponsive() {
+      const images = document.querySelectorAll('img[usemap]');
+
+      images.forEach((image) => {
+        const mapName = image.getAttribute('usemap').replace('#', '');
+        const map = document.querySelector(`map[name="${mapName}"]`);
+
+        if (!map) {
+          return;
+        }
+
+        const areas = map.querySelectorAll('area');
+        const naturalWidth = image.naturalWidth || Number(image.getAttribute('width'));
+        const naturalHeight = image.naturalHeight || Number(image.getAttribute('height'));
+
+        if (!naturalWidth || !naturalHeight) {
+          return;
+        }
+
+        areas.forEach((area) => {
+          if (!area.dataset.originalCoords) {
+            area.dataset.originalCoords = area.coords;
+          }
+
+          const originalCoords = area.dataset.originalCoords.split(',').map(Number);
+          const widthRatio = image.clientWidth / naturalWidth;
+          const heightRatio = image.clientHeight / naturalHeight;
+
+          const resizedCoords = originalCoords.map((coord, index) => {
+            const ratio = index % 2 === 0 ? widthRatio : heightRatio;
+            return Math.round(coord * ratio);
+          });
+
+          area.coords = resizedCoords.join(',');
+        });
+      });
+    }
+
+    window.addEventListener('load', makeImageMapResponsive);
+    window.addEventListener('resize', makeImageMapResponsive);
+  </script>
+</body>
+</html>
